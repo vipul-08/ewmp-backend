@@ -1,0 +1,18 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  tags:
+  - huex-sellbuy
+  only:
+  - production-ready
+  script:
+  - echo $CI_PROJECT_DIR
+  - cd
+  - cd /home/gitlab-runner
+  - gcloud auth activate-service-account --key-file shell.json
+  - gcloud config set project us-gcp-ame-con-116-npd-1
+  - cd
+  - cd $CI_PROJECT_DIR
+  - gcloud builds submit . --config=cloudbuild.yaml
